@@ -137,11 +137,11 @@ int main(int argc, char *argv[]){
     int i = 0;
     pthread_t thread_ID; 
 
-    for (i=0; i<num_producer_threads; i++) {
+    for (i=0; i<producer_count; i++) {
         pthread_create(&thread_ID, NULL, producer, NULL);
     }
 
-    for (i=0; i<num_consumer_threads; i++) {
+    for (i=0; i<producer_count; i++) {
         pthread_create(&thread_ID, NULL, consumer, NULL);
     }
 
