@@ -7,6 +7,7 @@
 
 typedef int buffer_item;
 #define BUFFER_SIZE 5
+#define TRUE 1
 
 int count; 
 
@@ -136,11 +137,11 @@ int main(int argc, char *argv[]){
     pthread_t thread_ID; 
 
     for (i=0; i<num_producer_threads; i++) {
-        pthread_create(&thread_id, NULL, producer, NULL);
+        pthread_create(&thread_ID, NULL, producer, NULL);
     }
 
     for (i=0; i<num_consumer_threads; i++) {
-        pthread_create(&thread_id, NULL, consumer, NULL);
+        pthread_create(&thread_ID, NULL, consumer, NULL);
     }
 
     // terminate 
