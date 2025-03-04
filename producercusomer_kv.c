@@ -94,7 +94,7 @@ void *consumer(void *param){
         pthread_mutex_lock(&mutex);
         
         // critical selection 
-        if(insert_item(&item) == 0){
+        if(remove_item(&item) == 0){
             printf("consumer removed %d\n", item);
         }
         else{
