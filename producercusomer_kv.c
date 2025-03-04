@@ -145,7 +145,7 @@ int main(int argc, char *argv[]){
 
     // terminate 
     sleep(sleep_time);
-    printf("done.");
+    printf("done./n");
     exit(0);
     
     return 0;
