@@ -104,19 +104,21 @@ void *consumer(void *param){
         // release mutex lock 
         pthread_mutex_unlock(&mutex);
 
-        // consumer process can now start
+        // signals producer process may start
         sem_post(&emptySpace);
 
     }
 }
 
+// 
 void init_locks() {
 
-    // Initialize mutex lock
+    // initialize mutex lock
     pthread_mutex_init(&mutex, NULL);
 
-    // Initialize full semaphore to 0 and empty semaphore to BUFFER_SIZE
+    // initialize full semaphore
     sem_init(&fullSpace, 0, 0);
+    // initalize empty semaphore to buffer size (5)
     sem_init(&emptySpace, 0, BUFFER_SIZE);
 }
 int main(int argc, char *argv[]){
@@ -129,6 +131,7 @@ int main(int argc, char *argv[]){
     // initalize the buffer count 
     count = 0;
     
+    // initlaize the semaphores & mutex lock
     init_locks();
 
     // create producer and consumer threads
@@ -143,8 +146,10 @@ int main(int argc, char *argv[]){
         pthread_create(&thread_ID, NULL, consumer, NULL);
     }
 
-    // terminate 
+    // terminate after x amount of seconds user input
     sleep(sleep_time);
+
+    //prints after sleep is over
     printf("done.\n");
     exit(0);
     
