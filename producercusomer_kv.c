@@ -133,7 +133,8 @@ int main(int argc, char *argv[]){
     
     init_locks();
 
-    // create producer and consumer threads 
+    // create producer and consumer threads
+    int i = 0;
     pthread_t thread_ID; 
 
     for (i=0; i<num_producer_threads; i++) {
@@ -146,7 +147,7 @@ int main(int argc, char *argv[]){
 
     // terminate 
     sleep(sleep_time);
-    printf("done.")
+    printf("done.");
     exit(0);
     
     return 0;
