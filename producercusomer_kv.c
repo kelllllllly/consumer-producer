@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <unistd.h>
 
 typedef int buffer_item;
 #define BUFFER_SIZE 5
@@ -12,9 +13,9 @@ typedef int buffer_item;
 int count; 
 
 // sempahores 
-sem_t = emptySpace;
+sem_t emptySpace;
 
-sem_t = fullSpace; 
+sem_t fullSpace; 
 
 pthread_mutex_t mutex;
 
@@ -26,7 +27,7 @@ buffer_item buffer[BUFFER_SIZE];
 int insert_item(buffer_item item){
     
     if(count < BUFFER_SIZE){
-        buffer(count) = item;
+        buffer[count] = item;
         count++;
         return 0;
     }
@@ -85,9 +86,6 @@ void *consumer(void *param){
     while(TRUE){
         // sleep randomly between 1 and 10 seconds 
         sleep(rand()% 10 + 1);
-
-        // create an item to be inserted 
-        item = rand();
             
         //decrement empty semaphore 
         sem_wait(&fullSpace);
@@ -96,7 +94,7 @@ void *consumer(void *param){
         pthread_mutex_lock(&mutex);
         
         // critical selection 
-        if(insert_item(item) == 0){
+        if(insert_item(&item) == 0){
             printf("consumer removed %d\n", item);
         }
         else{
@@ -126,7 +124,7 @@ int main(int argc, char *argv[]){
     // get cmd line args
     int sleep_time = atoi(argv[1]);
     int producer_count = atoi(argv[2]);
-    int thread_count = atoi(argv[3]);
+    int consumer_count = atoi(argv[3]);
 
     // initalize the buffer count 
     count = 0;
@@ -141,7 +139,7 @@ int main(int argc, char *argv[]){
         pthread_create(&thread_ID, NULL, producer, NULL);
     }
 
-    for (i=0; i<producer_count; i++) {
+    for (i=0; i<consumer_count; i++) {
         pthread_create(&thread_ID, NULL, consumer, NULL);
     }
 
